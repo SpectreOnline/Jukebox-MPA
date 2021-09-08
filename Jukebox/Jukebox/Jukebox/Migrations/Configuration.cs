@@ -9,7 +9,7 @@ namespace Jukebox.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Jukebox.Model1 context)
