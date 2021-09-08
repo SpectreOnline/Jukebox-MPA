@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Jukebox.Song>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<!--
+<div class="jumbotron">
+
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>
+-->
+<div class="container">
+    <h2 class="text-center">Highlighted songs</h2>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+
+            @foreach (var song in Model)
+            {
+                var songNum = 1;
+                <li data-target="#myCarousel" data-slide-to="@songNum"></li>
+                songNum++;
+            }
+
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" style="height: 65vh;">
+
+            <div class="item active" style="height: 100%; margin: auto; ">
+                <img src="https://64.media.tumblr.com/22f8cca39cb64e9b223fe8bab1dccead/tumblr_po8dh7Jks61wqb9aso1_1280.jpg" alt="test2" style="height: 100%; margin: auto;">
+                <div class="carousel-caption">
+                    <h3>Chicago</h3>
+                    <p>Thank you, Chicago!</p>
+                </div>
+            </div>
+
+            @foreach (var song in Model)
+            {
+                <div class="item" style="height: 100%; margin: auto;">
+                    <img src="https://www.sadanduseless.com/wp-content/uploads/2020/07/dark-stock-photos3.jpg" alt="test1" style="height: 100%; margin: auto;">
+                    <div class="carousel-caption">
+                        <h3>@song.Name</h3>
+                        <p>By: @song.Author Duration: @song.DurationMinutes:@song.DurationSeconds</p>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Add any song you'd like!</h2>
+        <p>
+            You can start adding any popular songs to our ever expanding library of users adding their favorite song!
+            It's as easy as filling out the form and boom your song has been added to our library.
+        </p>
+        <p><a class="btn btn-default" href="../Songs/Create">Start adding songs now! &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Create your own playlists!</h2>
+        <p>Using songs users have already added or songs you have added yourself create and name playlists however you like!</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>
