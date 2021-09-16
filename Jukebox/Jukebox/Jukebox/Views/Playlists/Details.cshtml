@@ -1,34 +1,41 @@
-﻿@model Jukebox.Playlist
+﻿@model Jukebox.Models.MultipleModels
+@using Jukebox.Utilities
 
 @{
     ViewBag.Title = "Details";
+    string URLValue = ViewContext.RouteData.Values["id"].ToString();
+    int id = Int32.Parse(URLValue);
 }
 
 <h2>Details</h2>
 
 <div>
     <h4>Playlist</h4>
-    <hr />
+    <hr /> 
     <dl class="dl-horizontal">
+        @if (Model.Playlists != null) {
+            foreach (var item in Model.Playlists.Where(i => i.ID == id))
+            {
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(modelItem => item.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(modelItem => item.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Creator)
+            @Html.DisplayNameFor(modelItem => item.Creator)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Creator)
+            @Html.DisplayFor(modelItem => item.Creator)
         </dd>
-
+            }
+        }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Edit", "Edit", new { id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

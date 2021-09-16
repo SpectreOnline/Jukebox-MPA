@@ -1,11 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Spatial;
+
+
 namespace Jukebox
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
+
+    [Serializable]
     public partial class Song
     {
         public int ID { get; set; }
@@ -14,11 +18,13 @@ namespace Jukebox
 
         public string Author { get; set; }
 
+        public string Genre { get; set; }
+
         public int DurationMinutes { get; set; }
 
         public int DurationSeconds { get; set; }
 
-        //public int? Playlists_ID { get; set; }
+        public List<int> Playlists_ID { get; set; }
 
     }
 }

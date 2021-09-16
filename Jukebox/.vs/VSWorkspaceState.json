@@ -2,9 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\Jukebox",
-    "\\Jukebox\\Controllers",
-    "\\Jukebox\\Migrations"
+    "\\Jukebox\\Jukebox",
+    "\\Jukebox\\Jukebox\\Controllers",
+    "\\Jukebox\\Jukebox\\Migrations",
+    "\\Jukebox\\Jukebox\\Utilities",
+    "\\Jukebox\\Jukebox\\Views",
+    "\\Jukebox\\Jukebox\\Views\\Playlists",
+    "\\Jukebox\\Jukebox\\Views\\Songs"
   ],
-  "SelectedNode": "\\Jukebox\\Migrations\\Configuration.cs",
+  "SelectedNode": "\\Jukebox\\Jukebox\\Views\\Playlists\\Details.cshtml",
   "PreviewInSolutionExplorer": false
 }

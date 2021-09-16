@@ -6,10 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Jukebox;
+using Jukebox.Models;
 
 namespace Jukebox.Controllers
 {
+
     public class PlaylistsController : Controller
     {
         private Model1 db = new Model1();
@@ -27,12 +28,16 @@ namespace Jukebox.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Playlist playlist = db.Playlists.Find(id);
-            if (playlist == null)
+            
+            MultipleModels multipleModels = new MultipleModels();
+            multipleModels.Songs = db.Songs;
+            multipleModels.Playlists = db.Playlists;
+
+            if (multipleModels == null)
             {
                 return HttpNotFound();
             }
-            return View(playlist);
+            return View(multipleModels);
         }
 
         // GET: Playlists/Create
@@ -46,7 +51,7 @@ namespace Jukebox.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Creator")] Playlist playlist)
+        public ActionResult Create([Bind(Include = "ID,Name,Creator")] Playlists playlist)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +70,7 @@ namespace Jukebox.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Playlist playlist = db.Playlists.Find(id);
+            Playlists playlist = db.Playlists.Find(id);
             if (playlist == null)
             {
                 return HttpNotFound();
@@ -78,7 +83,7 @@ namespace Jukebox.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Creator")] Playlist playlist)
+        public ActionResult Edit([Bind(Include = "ID,Name,Creator")] Playlists playlist)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +101,7 @@ namespace Jukebox.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Playlist playlist = db.Playlists.Find(id);
+            Playlists playlist = db.Playlists.Find(id);
             if (playlist == null)
             {
                 return HttpNotFound();
@@ -109,7 +114,7 @@ namespace Jukebox.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Playlist playlist = db.Playlists.Find(id);
+            Playlists playlist = db.Playlists.Find(id);
             db.Playlists.Remove(playlist);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Jukebox;
+using Jukebox.Utilities;
 
 namespace Jukebox.Controllers
 {
@@ -19,6 +20,12 @@ namespace Jukebox.Controllers
         {
             var songs = db.Songs;//.Include(s => s.Playlist);
             return View(songs.ToList());
+        }
+
+        public ActionResult Playlist()
+        {
+            var playlists = db.Playlists;
+            return View(playlists.ToList());
         }
 
         // GET: Songs/Details/5
@@ -90,9 +97,34 @@ namespace Jukebox.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.Playlists_ID = new SelectList(db.Playlists, "ID", "Creator", song.Playlists_ID);
+
             return View(song);
         }
+        
+        public ActionResult AddToPlaylist(int currentPlaylistID, int currentSongID)
+        {
+            //Make a delete version of this
+
+            //Make a single string containing all of the IDs and seperate them using commas
+
+            Playlists playlist = db.Playlists.Find(currentPlaylistID);
+
+            var song = db.Songs.Find(currentSongID);
+
+            if (playlist.SongList == null)
+            {
+                playlist.SongList = currentSongID.ToString();
+            }
+            else {
+                playlist.SongList = playlist.SongList + ',' + currentSongID.ToString();
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+
+        }
+        
 
         // GET: Songs/Delete/5
         public ActionResult Delete(int? id)
