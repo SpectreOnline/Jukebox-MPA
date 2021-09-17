@@ -7,7 +7,7 @@ namespace Jukebox.Utilities
 {
     public class JukeboxHelper 
     {
-        public List<int> SplitList(string songString)
+        public static List<int> SplitList(string songString)
         {
 
             List<string> songIds = songString.Split(',').ToList(); 
