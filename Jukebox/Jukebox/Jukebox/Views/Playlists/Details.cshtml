@@ -13,7 +13,7 @@
     <h4>Playlist</h4>
     <hr />
     @{ if (Model.Playlists != null)
-        {
+       {
             foreach (var item in Model.Playlists.Where(i => i.ID == id))
             {
             <dl class="dl-horizontal">
@@ -36,60 +36,59 @@
 
             </dl>
 
-                //first split the songlist string and then loop over the resulting list<int> to find a song with the id and add it to the table
 
                 List<int> songIDs = JukeboxHelper.SplitList(item.SongList);
-<table>
+            <table class="table">
             
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Songs.First().Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Songs.First().Author)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Songs.First().DurationMinutes)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Songs.First().DurationSeconds)
-        </th>
-        <th></th>
-    </tr>
-    @{ foreach (int songid in songIDs)
-        {
-            foreach (Song song in Model.Songs.Where(i => i.ID == songid))
-            {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => song.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => song.Author)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => song.DurationMinutes)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => song.DurationSeconds)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = song.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = song.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = song.ID }) |
-                        @Html.ActionLink("Add to playlist", "Playlist", new { id = song.ID })
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Songs.First().Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Songs.First().Author)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Songs.First().DurationMinutes)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Songs.First().DurationSeconds)
+                    </th>
+                    <th></th>
                 </tr>
-            }
+                @{ foreach (int songid in songIDs)
+                    {
+                        foreach (Song song in Model.Songs.Where(i => i.ID == songid))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => song.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => song.Author)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => song.DurationMinutes)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => song.DurationSeconds)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = song.ID }) |
+                                    @Html.ActionLink("Details", "Details", new { id = song.ID }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = song.ID }) |
+                                    @Html.ActionLink("Add to playlist", "Playlist", new { id = song.ID })
+                                </td>
+                            </tr>
+                        }
 
+                    }
+                }
+
+            </table>
+
+            }
         }
     }
-
-</table>
-
-            }
-        }
-}
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id }) |
