@@ -31,8 +31,16 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Tido Koldenhof - Jukebox</p>
         </footer>
+        <div class="navbar navbar-inverse navbar-fixed-bottom">
+            @if (Session["tempPlaylist"] != null)
+            {
+                string currentURL = HttpContext.Current.Request.Url.AbsolutePath.TrimStart('/');
+                <p class="text-center" style="color:lightgray; margin-bottom: auto;">Now playing: @Session["tempPlaylist"]</p>
+                <p class="text-center"><a class="text-center" style="color:lightgray; margin-bottom: auto;" href="~/Songs/ClearQueue?currentURL=@currentURL">Clear the Queue</a></p>
+            }
+            <p class="text-center" style="color:lightgray; margin-bottom: auto;">&copy; @DateTime.Now.Year - Tido Koldenhof - Jukebox</p>
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

@@ -124,7 +124,24 @@ namespace Jukebox.Controllers
             return RedirectToAction("Index");
 
         }
-        
+
+        public ActionResult AddToQueue(int songID, string currentURL)
+        {
+            Session["tempPlaylist"] = Session["tempPlaylist"] + songID.ToString() + ',';
+
+            string redirectURL = "~/" + currentURL;
+
+            return Redirect(redirectURL);
+        }
+
+        public ActionResult ClearQueue(string currentURL)
+        {
+            Session["tempPlaylist"] = null;
+
+            string redirectURL = "~/" + currentURL;
+
+            return Redirect(redirectURL);
+        }
 
         // GET: Songs/Delete/5
         public ActionResult Delete(int? id)

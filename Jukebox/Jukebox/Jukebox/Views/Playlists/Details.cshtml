@@ -76,7 +76,8 @@
                                     @Html.ActionLink("Edit", "Edit", new { id = song.ID }) |
                                     @Html.ActionLink("Details", "Details", new { id = song.ID }) |
                                     @Html.ActionLink("Delete", "Delete", new { id = song.ID }) |
-                                    @Html.ActionLink("Add to playlist", "Playlist", new { id = song.ID })
+                                    @Html.ActionLink("Add to playlist", "Playlist", new { id = song.ID }) |
+                                    <a href="~/Songs/AddToQueue?SongID=@song.ID&currentURL=@HttpContext.Current.Request.Url.AbsolutePath.TrimStart('/')">Add to queue</a>
                                 </td>
                             </tr>
                         }

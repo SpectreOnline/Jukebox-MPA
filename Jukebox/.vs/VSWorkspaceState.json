@@ -8,8 +8,9 @@
     "\\Jukebox\\Jukebox\\Utilities",
     "\\Jukebox\\Jukebox\\Views",
     "\\Jukebox\\Jukebox\\Views\\Playlists",
+    "\\Jukebox\\Jukebox\\Views\\Shared",
     "\\Jukebox\\Jukebox\\Views\\Songs"
   ],
-  "SelectedNode": "\\Jukebox\\Jukebox\\Views\\Playlists\\Details.cshtml",
+  "SelectedNode": "\\Jukebox\\Jukebox\\Views\\Shared\\_Layout.cshtml",
   "PreviewInSolutionExplorer": false
 }

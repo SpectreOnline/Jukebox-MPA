@@ -52,12 +52,15 @@
             @Html.DisplayFor(modelItem => item.DurationSeconds)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID }) |
-            @Html.ActionLink("Add to playlist", "Playlist", new { id=item.ID})
-        </td>
-    </tr>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
+            @Html.ActionLink("Add to playlist", "Playlist", new { id = item.ID }) |
+            @Html.ActionLink("Add to queue", "AddToQueue", new { SongID = item.ID, currentURL = HttpContext.Current.Request.Url.AbsolutePath.TrimStart('/')})
+</td>
+
+
+</tr>
 }
 
 </table>
