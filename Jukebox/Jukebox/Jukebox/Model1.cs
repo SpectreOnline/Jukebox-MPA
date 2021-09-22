@@ -14,8 +14,6 @@ namespace Jukebox
         }
 
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
-        
-        //public virtual DbSet<MultipleModels> MultipleModels { get; set; }
 
         public virtual DbSet<Song> Songs { get; set; }
 

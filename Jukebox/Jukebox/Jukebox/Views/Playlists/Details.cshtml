@@ -34,10 +34,12 @@
                     @Html.DisplayFor(modelItem => item.Creator)
                 </dd>
 
-            </dl>
-
-
-                List<int> songIDs = JukeboxHelper.SplitList(item.SongList);
+            </dl>                  
+                List<int> songIDs = new List<int>();
+                if (item.SongList != null)
+                {
+                    songIDs = JukeboxHelper.SplitList(item.SongList);
+                }
             <table class="table">
             
                 <tr>
@@ -55,7 +57,8 @@
                     </th>
                     <th></th>
                 </tr>
-                @{ foreach (int songid in songIDs)
+                @if (item.SongList != null) {
+                foreach (int songid in songIDs)
                     {
                         foreach (Song song in Model.Songs.Where(i => i.ID == songid))
                         {
@@ -84,7 +87,7 @@
 
                     }
                 }
-
+              
             </table>
 
             }

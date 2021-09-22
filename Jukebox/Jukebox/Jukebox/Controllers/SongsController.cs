@@ -127,7 +127,12 @@ namespace Jukebox.Controllers
 
         public ActionResult AddToQueue(int songID, string currentURL)
         {
-            Session["tempPlaylist"] = Session["tempPlaylist"] + songID.ToString() + ',';
+            Song song = db.Songs.Find(songID);
+
+            var songObjects = Session["tempPlaylist"] as List<Song> ?? new List<Song>();
+            songObjects.Add(song);
+
+            Session["tempPlaylist"] = songObjects;
 
             string redirectURL = "~/" + currentURL;
 

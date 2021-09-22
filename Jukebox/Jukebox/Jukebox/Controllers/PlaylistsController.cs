@@ -41,8 +41,13 @@ namespace Jukebox.Controllers
         }
 
         // GET: Playlists/Create
-        public ActionResult Create()
+        public ActionResult Create(string convertingQueue)
         {
+            if (convertingQueue == "true") 
+            {
+                Session["convertingQueue"] = convertingQueue;
+            }
+
             return View();
         }
 
@@ -51,7 +56,7 @@ namespace Jukebox.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Creator")] Playlists playlist)
+        public ActionResult Create([Bind(Include = "ID,Name,Creator,SongList")] Playlists playlist)
         {
             if (ModelState.IsValid)
             {

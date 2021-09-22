@@ -1,4 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    var nowPlaying = "";
+    if(Session["tempPlaylist"] != null)
+    {
+        List<Song> sessionObjects = (List<Song>)Session["tempPlaylist"];
+
+        nowPlaying = (sessionObjects).FirstOrDefault().Name;
+    }
+
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -36,7 +47,9 @@
             @if (Session["tempPlaylist"] != null)
             {
                 string currentURL = HttpContext.Current.Request.Url.AbsolutePath.TrimStart('/');
-                <p class="text-center" style="color:lightgray; margin-bottom: auto;">Now playing: @Session["tempPlaylist"]</p>
+                <p class="text-center" style="color:lightgray; margin-bottom: auto;">Now playing: @nowPlaying</p>
+                <p class="text-center"><a class="text-center" style="color:lightgray; margin-bottom: auto;" href="~/Playlists/Create?convertingQueue=true">Convert queue into a playlist</a></p>
+                <br />
                 <p class="text-center"><a class="text-center" style="color:lightgray; margin-bottom: auto;" href="~/Songs/ClearQueue?currentURL=@currentURL">Clear the Queue</a></p>
             }
             <p class="text-center" style="color:lightgray; margin-bottom: auto;">&copy; @DateTime.Now.Year - Tido Koldenhof - Jukebox</p>
