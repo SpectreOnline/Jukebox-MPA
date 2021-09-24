@@ -50,6 +50,9 @@
                         @Html.DisplayNameFor(model => model.Songs.First().Author)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(model => model.Songs.First().Genre)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.Songs.First().DurationMinutes)
                     </th>
                     <th>
@@ -68,6 +71,9 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => song.Author)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => song.Genre)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => song.DurationMinutes)
