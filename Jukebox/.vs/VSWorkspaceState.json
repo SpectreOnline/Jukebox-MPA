@@ -11,6 +11,6 @@
     "\\Jukebox\\Jukebox\\Views\\Shared",
     "\\Jukebox\\Jukebox\\Views\\Songs"
   ],
-  "SelectedNode": "\\Jukebox\\Jukebox\\Views\\Shared\\_Layout.cshtml",
+  "SelectedNode": "\\Jukebox\\Jukebox\\Views\\Songs\\Create.cshtml",
   "PreviewInSolutionExplorer": false
 }

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Jukebox;
 using Jukebox.Utilities;
+using Jukebox.Models;
 
 namespace Jukebox.Controllers
 {
@@ -46,8 +47,16 @@ namespace Jukebox.Controllers
         // GET: Songs/Create
         public ActionResult Create()
         {
-            //ViewBag.Playlists_ID = new SelectList(db.Playlists, "ID", "Creator");
-            return View();
+            MultipleModels multipleModels = new MultipleModels();
+            multipleModels.Songs = db.Songs;
+            multipleModels.Genres = db.Genres;
+
+            if (multipleModels == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(multipleModels);
         }
 
         // POST: Songs/Create
@@ -55,10 +64,13 @@ namespace Jukebox.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Author,DurationMinutes,DurationSeconds,Playlists_ID")] Song song)
+        public ActionResult Create([Bind(Include = "ID,Name,Author,Genre,DurationMinutes,DurationSeconds")] Song song)
         {
             if (ModelState.IsValid)
             {
+                var minutesFromSeconds = (song.DurationSeconds - (song.DurationSeconds % 60)) / 60;
+                song.DurationSeconds %= 60;
+                song.DurationMinutes += minutesFromSeconds;
                 db.Songs.Add(song);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -71,6 +83,10 @@ namespace Jukebox.Controllers
         // GET: Songs/Edit/5
         public ActionResult Edit(int? id)
         {
+            MultipleModels multipleModels = new MultipleModels();
+            multipleModels.Songs = db.Songs;
+            multipleModels.Genres = db.Genres;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -81,7 +97,7 @@ namespace Jukebox.Controllers
                 return HttpNotFound();
             }
             //ViewBag.Playlists_ID = new SelectList(db.Playlists, "ID", "Creator", song.Playlists_ID);
-            return View(song);
+            return View(multipleModels);
         }
 
         // POST: Songs/Edit/5
@@ -89,10 +105,13 @@ namespace Jukebox.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Author,DurationMinutes,DurationSeconds,Playlists_ID")] Song song)
+        public ActionResult Edit([Bind(Include = "ID,Name,Author,DurationMinutes,DurationSeconds,Genre")] Song song)
         {
             if (ModelState.IsValid)
             {
+                var minutesFromSeconds = (song.DurationSeconds - (song.DurationSeconds % 60)) / 60;
+                song.DurationSeconds %= 60;
+                song.DurationMinutes += minutesFromSeconds;
                 db.Entry(song).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

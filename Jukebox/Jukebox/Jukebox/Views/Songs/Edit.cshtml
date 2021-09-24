@@ -1,69 +1,81 @@
-﻿@model Jukebox.Song
+﻿@model Jukebox.Models.MultipleModels
 
 @{
     ViewBag.Title = "Edit";
+    string URLValue = ViewContext.RouteData.Values["id"].ToString();
+    int id = Int32.Parse(URLValue);
 }
 
 <h2>Edit</h2>
 
+@{  if (Model.Songs != null)
+    {
+        foreach (var song in Model.Songs.Where(i => i.ID == id))
+        {
+            using (Html.BeginForm())
+            {
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <h4>Song</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(modelItem => song.ID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(modelItem => song.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                @Html.EditorFor(modelItem => song.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(modelItem => song.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(modelItem => song.Author, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+                @Html.EditorFor(modelItem => song.Author, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(modelItem => song.Author, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DurationMinutes, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(modelItem => song.DurationMinutes, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DurationMinutes, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DurationMinutes, "", new { @class = "text-danger" })
+                @Html.EditorFor(modelItem => song.DurationMinutes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Songs.First().DurationMinutes, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DurationSeconds, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(modelItem => song.DurationSeconds, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DurationSeconds, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DurationSeconds, "", new { @class = "text-danger" })
+                @Html.EditorFor(modelItem => song.DurationSeconds, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(modelItem => song.DurationSeconds, "", new { @class = "text-danger" })
             </div>
         </div>
-        @{ /*
-          <div class="form-group">
-              @Html.LabelFor(model => model.Playlists_ID, "Playlists_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-              <div class="col-md-10">
-                  @Html.ListBox("Playlists_ID", null, htmlAttributes: new { @class = "form-control" })
-                  @Html.ValidationMessageFor(model => model.Playlists_ID, "", new { @class = "text-danger" })
-              </div>
-          </div>
-          */
-        }
+
+        <div class="from-group">
+            @Html.LabelFor(model => model.Songs.First().Genre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <select class="form-control" id="song_Genre" name="song.Genre">
+
+                @foreach (var genre in Model.Genres)
+                {
+                    <option value="@genre.GenreName">@genre.GenreName</option>
+                }
+
+            </select>
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
+            }
+        }
+    }
 }
 
 <div>

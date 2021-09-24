@@ -1,4 +1,4 @@
-﻿@model Jukebox.Song
+﻿@model Jukebox.Models.MultipleModels
 
 @{
     ViewBag.Title = "Create";
@@ -10,58 +10,62 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+ 
 <div class="form-horizontal">
     <h4>Song</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Songs.First().Name, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Songs.First().Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Songs.First().Name, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Songs.First().Author, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Songs.First().Author, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Songs.First().Author, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.DurationMinutes, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Songs.First().DurationMinutes, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DurationMinutes, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DurationMinutes, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Songs.First().DurationMinutes, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Songs.First().DurationMinutes, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.DurationSeconds, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Songs.First().DurationSeconds, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DurationSeconds, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DurationSeconds, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Songs.First().DurationSeconds, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Songs.First().DurationSeconds, "", new { @class = "text-danger" })
         </div>
     </div>
-    @{ /*
-    <div class="form-group">
-        @Html.LabelFor(model => model.Playlists_ID, "Playlists_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("Playlists_ID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Playlists_ID, "", new { @class = "text-danger" })
-        </div>
+    <div class="from-group">
+        @Html.LabelFor(model => model.Songs.First().Genre, htmlAttributes: new { @class = "control-label col-md-2"})
+        <select class="form-control" id="Genre" name="Genre"> 
+            
+            @foreach (var genre in Model.Genres)
+            {
+            <option value="@genre.GenreName">@genre.GenreName</option>
+            }
+            
+        </select>
     </div>
-       */ }
+
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-default" />
         </div>
     </div>
 </div>
-}
+            }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
