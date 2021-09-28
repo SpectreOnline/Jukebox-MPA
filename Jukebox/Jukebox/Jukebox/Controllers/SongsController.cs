@@ -17,10 +17,27 @@ namespace Jukebox.Controllers
         private Model1 db = new Model1();
 
         // GET: Songs
-        public ActionResult Index()
+        public ActionResult Index(string genre)
         {
-            var songs = db.Songs;//.Include(s => s.Playlist);
-            return View(songs.ToList());
+            MultipleModels multipleModels = new MultipleModels();
+
+            if (multipleModels == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (genre != null && genre != "")
+            {
+                multipleModels.Songs = db.Songs.Where(i => i.Genre == genre);
+            }
+            else
+            {
+                multipleModels.Songs = db.Songs;
+            }
+
+            multipleModels.Genres = db.Genres;
+
+            return View(multipleModels);
         }
 
         public ActionResult Playlist()
