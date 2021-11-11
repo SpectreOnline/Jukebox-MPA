@@ -150,9 +150,24 @@ namespace Jukebox.Controllers
             if (playlist.SongList == null)
             {
                 playlist.SongList = currentSongID.ToString();
+                playlist.DurationMinutes = song.DurationMinutes;
+                playlist.DurationSeconds = song.DurationSeconds;
             }
-            else {
+            else
+            {
                 playlist.SongList = playlist.SongList + ',' + currentSongID.ToString();
+                playlist.DurationMinutes += song.DurationMinutes;
+                if (playlist.DurationSeconds + song.DurationSeconds > 60)
+                {
+                    var sumOfSeconds = playlist.DurationSeconds + song.DurationSeconds;
+                    var minutesFromSeconds = (playlist.DurationSeconds - (sumOfSeconds % 60)) / 60;
+                    sumOfSeconds %= 60;
+                    playlist.DurationMinutes += minutesFromSeconds;
+                    playlist.DurationSeconds = sumOfSeconds;
+                }
+                else {
+                    playlist.DurationSeconds += song.DurationSeconds;
+                }
             }
 
             db.SaveChanges();
@@ -161,6 +176,53 @@ namespace Jukebox.Controllers
 
         }
 
+        public ActionResult RemoveFromPlaylist(int currentPlaylistID, int currentSongID)
+        {
+            //Make a delete version of this
+
+            //Make a single string containing all of the IDs and seperate them using commas
+
+            Playlists playlist = db.Playlists.Find(currentPlaylistID);
+
+            var song = db.Songs.Find(currentSongID);
+
+            if (playlist.SongList != null)
+            {
+
+                List<int> songList = playlist.SongList.Split(',').ToList().Select(int.Parse).ToList();
+                var songToRemove = songList.Single(r => r == currentSongID);
+                songList.Remove(songToRemove);
+
+                string songListString = "";
+
+                foreach (var idNumber in songList)
+                {
+                    songListString = songListString + ',' + idNumber;
+                }
+
+                playlist.SongList = songListString;
+
+                playlist.DurationMinutes -= song.DurationMinutes;
+
+                if (playlist.DurationSeconds - song.DurationSeconds < 0)
+                {
+                    playlist.DurationSeconds = (playlist.DurationSeconds + 60) - song.DurationSeconds;
+                    playlist.DurationMinutes -= 1;
+                }
+                else
+                {
+                    playlist.DurationSeconds -= song.DurationSeconds;
+                }
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+
+            }
+            else {
+                return RedirectToAction("Index");
+            }
+        }
         public ActionResult AddToQueue(int songID, string currentURL)
         {
             Song song = db.Songs.Find(songID);

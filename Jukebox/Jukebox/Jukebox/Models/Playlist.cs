@@ -14,5 +14,7 @@ namespace Jukebox {
         public string Name { get; set; }
         public string Creator { get; set; }
         public string SongList { get; set; }
+        public int DurationMinutes { get; set; }
+        public int DurationSeconds { get; set; }
     }
 }

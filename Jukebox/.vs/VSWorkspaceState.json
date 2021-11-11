@@ -4,13 +4,13 @@
     "\\Jukebox",
     "\\Jukebox\\Jukebox",
     "\\Jukebox\\Jukebox\\Controllers",
-    "\\Jukebox\\Jukebox\\Migrations",
     "\\Jukebox\\Jukebox\\Utilities",
     "\\Jukebox\\Jukebox\\Views",
+    "\\Jukebox\\Jukebox\\Views\\Home",
     "\\Jukebox\\Jukebox\\Views\\Playlists",
     "\\Jukebox\\Jukebox\\Views\\Shared",
     "\\Jukebox\\Jukebox\\Views\\Songs"
   ],
-  "SelectedNode": "\\Jukebox\\Jukebox\\Views\\Songs\\Index.cshtml",
+  "SelectedNode": "\\Jukebox\\Jukebox\\Controllers\\SongsController.cs",
   "PreviewInSolutionExplorer": false
 }
