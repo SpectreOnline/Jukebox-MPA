@@ -31,17 +31,17 @@
         <div class="carousel-inner" style="height: 65vh;" id="carousel">
 
             <div class="item active" style="height: 100%; margin: auto; ">
-                <img src="https://64.media.tumblr.com/22f8cca39cb64e9b223fe8bab1dccead/tumblr_po8dh7Jks61wqb9aso1_1280.jpg" alt="test2" style="height: 100%; margin: auto;">
+                <img alt="test2" class="carouselImg" id="0" style="height: 100%; margin: auto;">
                 <div class="carousel-caption">
-                    <h3>Chicago</h3>
-                    <p>Thank you, Chicago!</p>
+                    <h3>Welcome to the webpage!</h3>
+                    <p>I hope you enjoy the songs the WebApp!</p>
                 </div>
             </div>
 
             @foreach (var song in Model)
             {
                 <div class="item" style="height: 100%; margin: auto;">
-                    <img src="https://picsum.photos/200/300?random=@(song.ID)" alt="test1" style="height: 100%; margin: auto;">
+                    <img alt="test1" style="height: 100%; margin: auto;" class="carouselImg" id="@(song.ID + 1)">
                     <div class="carousel-caption">
                         <h3>@song.Name</h3>
                         <p>By: @song.Author Duration: @song.DurationMinutes:@(song.DurationSeconds < 10 ? (string)("0" + song.DurationSeconds) : (string)(song.DurationSeconds + ""))</p>
@@ -113,5 +113,15 @@
 <script>
     var carousel = document.getElementById('carousel');
 
-    
+    var carouselImgCollection = document.querySelectorAll(".carouselImg");
+
+    carouselImgCollection.forEach(findImgAndReplaceSource);
+
+    function findImgAndReplaceSource(image) {
+        var linkString = "https://picsum.photos/";
+        linkString += screen.width + "/";
+        linkString += screen.height + "?random=" + image.id;
+        image.src = linkString;
+    }
+
 </script>

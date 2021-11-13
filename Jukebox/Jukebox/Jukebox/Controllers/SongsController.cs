@@ -147,7 +147,7 @@ namespace Jukebox.Controllers
 
             var song = db.Songs.Find(currentSongID);
 
-            if (playlist.SongList == null)
+            if (playlist.SongList == null || playlist.SongList == "")
             {
                 playlist.SongList = currentSongID.ToString();
                 playlist.DurationMinutes = song.DurationMinutes;
@@ -186,7 +186,7 @@ namespace Jukebox.Controllers
 
             var song = db.Songs.Find(currentSongID);
 
-            if (playlist.SongList != null)
+            if (playlist.SongList != null || playlist.SongList != "")
             {
 
                 List<int> songList = playlist.SongList.Split(',').ToList().Select(int.Parse).ToList();
@@ -218,11 +218,12 @@ namespace Jukebox.Controllers
 
                 return RedirectToAction("Index");
 
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            else {
-                return RedirectToAction("Index");
-            }
-        }
         public ActionResult AddToQueue(int songID, string currentURL)
         {
             Song song = db.Songs.Find(songID);
