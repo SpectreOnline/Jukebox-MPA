@@ -3,17 +3,10 @@
     ViewBag.Title = "Home Page";
 }
 
-<!--
-<div class="jumbotron">
-
-        <h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-    </div>
--->
 <div class="container">
-    <h2 class="text-center">Highlighted songs</h2>
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <h2 class="text-center slide-intro-left-1">Highlighted songs</h2>
+    <hr />
+    <div id="myCarousel" class="carousel slide rounded slide-intro-left-2" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -28,7 +21,7 @@
         </ol>
 
         <!-- Wrapper for slides -->
-        <div class="carousel-inner" style="height: 65vh;" id="carousel">
+        <div class="carousel-inner" style="height: 65vh;" id="myCarousel">
 
             <div class="item active" style="height: 100%; margin: auto; ">
                 <img alt="test2" class="carouselImg" id="0" style="height: 100%; margin: auto;">
@@ -72,24 +65,24 @@
         @{var songList = (List<Song>)Session["tempPlaylist"];
             foreach (var song in songList)
             {
-            <div style="width: 25%;">
-                <div class="card-body">
-                    <h4 class="card-title">@song.Name</h4>
-                    <p class="card-text">
-                        By: @song.Author
-                    </p>
-                    <p class="card-text">
-                        Duration: @song.DurationMinutes:@song.DurationSeconds
-                    </p>
-                    <a href="~/Songs/Details/@song.ID" class="btn btn-primary">Check out this song</a>
+                <div style="width: 25%;">
+                    <div class="card-body">
+                        <h4 class="card-title">@song.Name</h4>
+                        <p class="card-text">
+                            By: @song.Author
+                        </p>
+                        <p class="card-text">
+                            Duration: @song.DurationMinutes:@song.DurationSeconds
+                        </p>
+                        <a href="~/Songs/Details/@song.ID" class="btn btn-primary">Check out this song</a>
+                    </div>
                 </div>
-            </div>
             }
         }
     </div>
-    <hr />
 }
-<div class="row">
+<hr />
+<div class="row slide-intro-left-3">
     <div class="col-md-4">
         <h2>Add any song you'd like!</h2>
         <p>
@@ -101,15 +94,17 @@
     <div class="col-md-4">
         <h2>Create your own playlists!</h2>
         <p>Using songs users have already added or songs you have added yourself create and name playlists however you like!</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="../Playlists/Create">Create a playlist now! &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>
+            Convert a queue into a playlist!
+        </h2>
+        <p>Convert your current queue to into a playlist and enjoy going back to your playlist at any time!</p>
+        <p><a class="btn btn-default" href="../Songsists/Index">Pick out songs for your new playlist now! &raquo;</a></p>
     </div>
 </div>
-
+<hr />
 <script>
     var carousel = document.getElementById('carousel');
 

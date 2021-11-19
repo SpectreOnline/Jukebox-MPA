@@ -137,6 +137,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model1.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\Genres.cs" />
     <Compile Include="Models\MultipleModels.cs" />
     <Compile Include="Models\Playlist.cs" />
@@ -191,6 +192,8 @@
     <Content Include="Views\Playlists\Edit.cshtml" />
     <Content Include="Views\Playlists\Index.cshtml" />
     <Content Include="Views\Songs\Playlist.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

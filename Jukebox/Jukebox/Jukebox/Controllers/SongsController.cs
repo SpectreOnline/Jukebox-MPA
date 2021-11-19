@@ -197,7 +197,7 @@ namespace Jukebox.Controllers
 
                 foreach (var idNumber in songList)
                 {
-                    songListString = songListString + ',' + idNumber;
+                    songListString = songListString + idNumber + ',' ;
                 }
 
                 playlist.SongList = songListString;

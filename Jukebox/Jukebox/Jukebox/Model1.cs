@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using Jukebox.Models;
 using System.Linq;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Jukebox
 {
@@ -14,6 +15,7 @@ namespace Jukebox
         }
 
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public virtual DbSet<Song> Songs { get; set; }
 
@@ -23,18 +25,10 @@ namespace Jukebox
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            /*
-            modelBuilder.Entity<Playlists>().Property<string>(new Func<Playlists, string>(x => x.SongList))
-            .HasConversion(
-                v => JsonConvert.SerializeObject(v),
-                v => JsonConvert.DeserializeObject<List<string>>(v));
-            */
-            /*
-            modelBuilder.Entity<Playlist>()
-            .HasMany(e => e.Songs)
-            .WithOptional(e => e.Playlist)
-            .HasForeignKey(e => e.Playlists_ID);
-                   */
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            base.OnModelCreating(modelBuilder);
         }
 
     }

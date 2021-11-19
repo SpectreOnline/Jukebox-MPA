@@ -17,9 +17,10 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/Content/stylesheet/animationsheet.css">
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top slide-intro-top-1">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -43,7 +44,7 @@
         <hr />
         <footer>
         </footer>
-        <div class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="navbar navbar-inverse navbar-fixed-bottom slide-intro-bottom-1">
             @if (Session["tempPlaylist"] != null)
             {
                 string currentURL = HttpContext.Current.Request.Url.AbsolutePath.TrimStart('/');
@@ -59,5 +60,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
