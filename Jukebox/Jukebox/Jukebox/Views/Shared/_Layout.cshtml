@@ -30,13 +30,18 @@
                 </button>
                 @Html.ActionLink("Jukebox", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Songs", "Index", "Songs")</li>
-                    <li>@Html.ActionLink("Playlists", "Index", "Playlists")</li>
-                </ul>
-            </div>
+            @if (Session["idUser"] != null)
+            {
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Songs", "Index", "Songs")</li>
+                        <li>@Html.ActionLink("Playlists", "Index", "Playlists")</li>
+                        <li> @Html.ActionLink("Logout", "Logout", "Home")</li>
+                    </ul>
+                </div>
+            }
+
         </div>
     </div>
     <div class="container body-content">

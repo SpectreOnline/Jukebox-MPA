@@ -11,6 +11,6 @@
     "\\Jukebox\\Jukebox\\Views\\Shared",
     "\\Jukebox\\Jukebox\\Views\\Songs"
   ],
-  "SelectedNode": "\\Jukebox\\Jukebox\\Controllers\\SongsController.cs",
+  "SelectedNode": "\\Jukebox\\Jukebox\\Views\\Home\\Register.cshtml",
   "PreviewInSolutionExplorer": false
 }

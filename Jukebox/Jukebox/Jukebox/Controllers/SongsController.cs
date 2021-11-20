@@ -19,25 +19,33 @@ namespace Jukebox.Controllers
         // GET: Songs
         public ActionResult Index(string genre)
         {
-            MultipleModels multipleModels = new MultipleModels();
-
-            if (multipleModels == null)
+            if (Session["idUser"] != null)
             {
-                return HttpNotFound();
-            }
+                MultipleModels multipleModels = new MultipleModels();
 
-            if (genre != null && genre != "")
-            {
-                multipleModels.Songs = db.Songs.Where(i => i.Genre == genre);
+                if (multipleModels == null)
+                {
+                    return HttpNotFound();
+                }
+
+                if (genre != null && genre != "")
+                {
+                    multipleModels.Songs = db.Songs.Where(i => i.Genre == genre);
+                }
+                else
+                {
+                    multipleModels.Songs = db.Songs;
+                }
+
+                multipleModels.Genres = db.Genres;
+
+                return View(multipleModels);
             }
             else
             {
-                multipleModels.Songs = db.Songs;
+                return RedirectToAction("Login");
             }
 
-            multipleModels.Genres = db.Genres;
-
-            return View(multipleModels);
         }
 
         public ActionResult Playlist()

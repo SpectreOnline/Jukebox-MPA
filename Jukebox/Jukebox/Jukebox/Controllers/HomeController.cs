@@ -34,16 +34,16 @@ namespace Jukebox.Controllers
         //POST: Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(User _user)
+        public ActionResult Register(User user)
         {
             if (ModelState.IsValid)
             {
-                var check = db.Users.FirstOrDefault(s => s.Email == _user.Email);
+                var check = db.Users.FirstOrDefault(s => s.Email == user.Email);
                 if (check == null)
                 {
-                    _user.Password = GetMD5(_user.Password);
+                    user.Password = ActivatePasswordSecurity(user.Password);
                     db.Configuration.ValidateOnSaveEnabled = false;
-                    db.Users.Add(_user);
+                    db.Users.Add(user);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -75,14 +75,14 @@ namespace Jukebox.Controllers
             {
 
 
-                var f_password = GetMD5(password);
-                var data = db.Users.Where(s => s.Email.Equals(email) && s.Password.Equals(f_password)).ToList();
-                if (data.Count() > 0)
+                var f_password = ActivatePasswordSecurity(password);
+                var userData = db.Users.Where(s => s.Email.Equals(email) && s.Password.Equals(f_password)).ToList();
+                if (userData.Count() > 0)
                 {
                     //add session
-                    Session["FullName"] = data.FirstOrDefault().FirstName + " " + data.FirstOrDefault().LastName;
-                    Session["Email"] = data.FirstOrDefault().Email;
-                    Session["idUser"] = data.FirstOrDefault().idUser;
+                    Session["FullName"] = userData.FirstOrDefault().FirstName + " " + userData.FirstOrDefault().LastName;
+                    Session["Email"] = userData.FirstOrDefault().Email;
+                    Session["idUser"] = userData.FirstOrDefault().idUser;
                     return RedirectToAction("Index");
                 }
                 else
@@ -105,7 +105,7 @@ namespace Jukebox.Controllers
 
 
         //create a string MD5
-        public static string GetMD5(string str)
+        public static string ActivatePasswordSecurity(string str)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
             byte[] fromData = Encoding.UTF8.GetBytes(str);
