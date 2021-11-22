@@ -185,10 +185,10 @@ namespace Jukebox.Controllers
             {
                 playlist.SongList = playlist.SongList + ',' + currentSongID.ToString();
                 playlist.DurationMinutes += song.DurationMinutes;
-                if (playlist.DurationSeconds + song.DurationSeconds > 60)
+                if (playlist.DurationSeconds + song.DurationSeconds >= 60)
                 {
                     var sumOfSeconds = playlist.DurationSeconds + song.DurationSeconds;
-                    var minutesFromSeconds = (playlist.DurationSeconds - (sumOfSeconds % 60)) / 60;
+                    var minutesFromSeconds = (int)Math.Floor((decimal)(playlist.DurationSeconds + song.DurationSeconds) / 60);
                     sumOfSeconds %= 60;
                     playlist.DurationMinutes += minutesFromSeconds;
                     playlist.DurationSeconds = sumOfSeconds;
@@ -217,7 +217,7 @@ namespace Jukebox.Controllers
             if (playlist.SongList != null || playlist.SongList != "")
             {
 
-                List<int> songList = playlist.SongList.Split(',').ToList().Select(int.Parse).ToList();
+                List<int> songList = playlist.SongList.Split(',').Select(int.Parse).ToList();
                 var songToRemove = songList.Single(r => r == currentSongID);
                 songList.Remove(songToRemove);
 

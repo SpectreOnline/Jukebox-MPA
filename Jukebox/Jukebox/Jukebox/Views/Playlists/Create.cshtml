@@ -14,10 +14,16 @@
 
         foreach (var song in (List<Song>)Session["tempPlaylist"])
         {
-            songsInQueue = songsInQueue + song.ID + ',';
+            if (string.IsNullOrWhiteSpace(songsInQueue))
+            {
+                songsInQueue = song.ID.ToString();
+            }
+            else
+            {
+                songsInQueue = songsInQueue + ',' + song.ID;
+            }
         }
     }
-
 }
 
 <h2>Create</h2>

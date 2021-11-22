@@ -1,7 +1,7 @@
 /* width */
 ::-webkit-scrollbar {
     width: 12px;
-    background-color: rgb(0, 0, 0);
+    opacity: 0;
 }
 
 /* Track */
@@ -17,7 +17,15 @@
     border-radius: 10px;
 }
 
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: gray;
-    }
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: gray;
+}
+
+html {
+    background-color:black;
+}
+
+body {
+    min-height: 100vh;
+}

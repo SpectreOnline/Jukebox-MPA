@@ -81,6 +81,26 @@ namespace Jukebox.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(playlist.SongList)) {
+                    List<int> songList = playlist.SongList.Split(',').Select(int.Parse).ToList();
+                    foreach (int songId in songList) {
+                        var song = db.Songs.Find(songId);
+                        playlist.DurationMinutes += song.DurationMinutes;
+                        if (playlist.DurationSeconds + song.DurationSeconds >= 60)
+                        {
+                            var sumOfSeconds = playlist.DurationSeconds + song.DurationSeconds;
+                            var minutesFromSeconds = (int)Math.Floor((decimal)(playlist.DurationSeconds + song.DurationSeconds) / 60);
+                            sumOfSeconds %= 60;
+                            playlist.DurationMinutes += minutesFromSeconds;
+                            playlist.DurationSeconds = sumOfSeconds;
+                        }
+                        else
+                        {
+                            playlist.DurationSeconds += song.DurationSeconds;
+                        }
+                    }
+                }
+
                 db.Playlists.Add(playlist);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -92,33 +112,41 @@ namespace Jukebox.Controllers
         // GET: Playlists/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["idUser"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Playlists playlist = db.Playlists.Find(id);
-            if (playlist == null)
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Playlists playlist = db.Playlists.Find(id);
+                if (playlist == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(playlist);
+            } else 
             {
-                return HttpNotFound();
+                return Redirect("~/Home/Login");
             }
-            return View(playlist);
         }
 
         // POST: Playlists/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // Bug: All the songs in the playlist are removed upon the edit of said playlist
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Creator")] Playlists playlist)
+        public ActionResult Edit([Bind(Include = "ID,Name,Creator,SongList,DurationSeconds,DurationMinutes")] Playlists playlist)
         {
             if (ModelState.IsValid)
             {
+
                 db.Entry(playlist).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(playlist);
         }
+
 
         // GET: Playlists/Delete/5
         public ActionResult Delete(int? id)
