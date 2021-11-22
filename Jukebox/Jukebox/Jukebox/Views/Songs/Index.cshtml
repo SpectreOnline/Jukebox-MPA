@@ -3,9 +3,9 @@
 @{
     ViewBag.Title = "Index";
 }
-<div class="row">
+<div class="row slide-intro-left-1" style="margin-top: 2vh;">
     <h2 style="width: 35%; margin: auto;">Index</h2>
-    <div class="dropdown" style="width: 35%;margin: auto;">
+    <div class="dropdown" style="width: 35%;margin: auto; margin-top: 2vh;">
         <button class="btn btn-secondary dropdown-toggle"
                 type="button" id="dropdownMenu1" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -14,75 +14,77 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <a class="dropdown-item" href="~/Songs/Index">Song list overview</a>
             <br />
-            @foreach (var genre in Model.Genres) { 
-            @Html.ActionLink(genre.GenreName, "index", new { genre = genre.GenreName})
-            <br />
+            @foreach (var genre in Model.Genres)
+            {
+                @Html.ActionLink(genre.GenreName, "index", new { genre = genre.GenreName })
+                <br />
             }
         </div>
     </div>
+
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 </div>
+    <table class="table slide-intro-left-2">
+        <tr>
+            <!--
+            <th>
+                @{/*Html.DisplayNameFor(model => model.Playlist.Creator)*/}
+            </th>
+            -->
+            <th>
+                @Html.DisplayNameFor(model => model.Songs.First().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Songs.First().Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Songs.First().Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Songs.First().DurationMinutes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Songs.First().DurationSeconds)
+            </th>
+            <th> </th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-<table class="table">
-    <tr>
-        <!--
-    <th>
-        @{/*Html.DisplayNameFor(model => model.Playlist.Creator)*/}
-    </th>
-    -->
-        <th>
-            @Html.DisplayNameFor(model => model.Songs.First().Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Songs.First().Author)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Songs.First().Genre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Songs.First().DurationMinutes)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Songs.First().DurationSeconds)
-        </th>
-        <th> </th>
-    </tr>
-
-@foreach (var item in Model.Songs) {
-    <tr>
-        <!--
-        <td>
-            @{ /*Html.DisplayFor(modelItem => item.Playlist.Creator) */}
-        </td>
-        -->
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DurationMinutes)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DurationSeconds)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
-            @Html.ActionLink("Add to playlist", "Playlist", new { id = item.ID }) |
-            @Html.ActionLink("Add to queue", "AddToQueue", new { SongID = item.ID, currentURL = HttpContext.Current.Request.Url.AbsolutePath.TrimStart('/')})
-</td>
+        @foreach (var item in Model.Songs)
+        {
+            <tr>
+                <!--
+                <td>
+                    @{ /*Html.DisplayFor(modelItem => item.Playlist.Creator) */}
+                </td>
+                -->
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DurationMinutes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DurationSeconds)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
+                    @Html.ActionLink("Add to playlist", "Playlist", new { id = item.ID }) |
+                    @Html.ActionLink("Add to queue", "AddToQueue", new { SongID = item.ID, currentURL = HttpContext.Current.Request.Url.AbsolutePath.TrimStart('/') })
+                </td>
 
 
-</tr>
-}
+            </tr>
+        }
 
-</table>
+    </table>

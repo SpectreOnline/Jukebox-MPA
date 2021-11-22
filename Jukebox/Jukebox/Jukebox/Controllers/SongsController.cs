@@ -43,51 +43,71 @@ namespace Jukebox.Controllers
             }
             else
             {
-                return RedirectToAction("Login");
+                return Redirect("~/Home/Login");
             }
 
         }
 
         public ActionResult Playlist()
         {
-            var playlists = db.Playlists;
-            return View(playlists.ToList());
+            if (Session["idUser"] != null)
+            {
+                var playlists = db.Playlists;
+                return View(playlists.ToList());
+            }
+            else
+            {
+                return Redirect("~/Home/Login");
+            }
         }
 
-        // GET: Songs/Details/5
-        public ActionResult Details(int? id)
+            // GET: Songs/Details/5
+            public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["idUser"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Song song = db.Songs.Find(id);
-            if (song == null)
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Song song = db.Songs.Find(id);
+                if (song == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(song);
+            } else 
             {
-                return HttpNotFound();
+                return Redirect("~/Home/Login");
             }
-            return View(song);
         }
 
         // GET: Songs/Create
         public ActionResult Create()
         {
-            MultipleModels multipleModels = new MultipleModels();
-            multipleModels.Songs = db.Songs;
-            multipleModels.Genres = db.Genres;
-
-            if (multipleModels == null)
+            if (Session["idUser"] != null)
             {
-                return HttpNotFound();
-            }
+                MultipleModels multipleModels = new MultipleModels();
+                multipleModels.Songs = db.Songs;
+                multipleModels.Genres = db.Genres;
 
-            return View(multipleModels);
+                if (multipleModels == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(multipleModels);
+            }
+            else 
+            {
+                return Redirect("~/Home/login");
+            }
         }
 
-        // POST: Songs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+            // POST: Songs/Create
+            // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+            // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+            [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name,Author,Genre,DurationMinutes,DurationSeconds")] Song song)
         {

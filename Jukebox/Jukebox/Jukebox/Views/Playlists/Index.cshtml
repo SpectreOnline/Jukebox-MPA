@@ -3,13 +3,14 @@
 @{
     ViewBag.Title = "Index";
 }
+<div class="row slide-intro-left-1">
+    <h2>Index</h2>
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+</div>
+<table class="table slide-intro-left-2" style="margin-top: 5vh;">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -17,6 +18,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Creator)
         </th>
+        <th></th>
         <th></th>
     </tr>
 

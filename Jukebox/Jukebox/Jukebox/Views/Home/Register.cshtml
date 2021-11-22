@@ -4,15 +4,15 @@
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row justify-content-md-center">
-    <div class="col-md-5">
+<div class="row justify-content-md-center" style="margin-top: 8vh;">
+    <div class="col-lg-4 slide-intro-left-1">
         @using (Html.BeginForm("Register", "Home", FormMethod.Post))
         {
 
             @Html.AntiForgeryToken()
 
             <div class="card">
-                <h2 class="card-title">Register</h2>
+                <h2 class="card-title" style="margin-top: 0;">Register</h2>
                 <div class="card-body">
                     <div class="form-group">
                         <label for="FirstName">Enter your first name</label>
@@ -37,7 +37,8 @@
                     <div class="form-group">
 
                         <label for="Password">Enter a password</label>
-                        <p>Password must contain atleast a capital letter and a number</p>
+                        <p>Password must contain:</p>
+                        <p>A capital letter and a number</p>
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "badge badge-danger" })
                     </div>
@@ -54,4 +55,62 @@
 
         }
     </div>
+    <div id="myCarousel" class="carousel slide rounded col-lg-8 slide-intro-left-2" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <div class="carousel-inner" style="height: 65vh;" id="myCarousel">
+
+            <div class="item active" style="height: 100%; margin: auto; ">
+                <img alt="test2" class="carouselImg" id="0" style="height: 100%; margin: auto;">
+                <div class="carousel-caption">
+                    <h3>Add any song you'd like</h3>
+                    <p>I hope you enjoy the songs the WebApp!</p>
+                </div>
+            </div>
+
+            <div class="item" style="height: 100%; margin: auto; ">
+                <img alt="test2" class="carouselImg" id="1" style="height: 100%; margin: auto;">
+                <div class="carousel-caption">
+                    <h3>Create your own playlists!</h3>
+                    <p>I hope you enjoy the songs the WebApp!</p>
+                </div>
+            </div>
+
+            <div class="item" style="height: 100%; margin: auto; ">
+                <img alt="test2" class="carouselImg" id="2" style="height: 100%; margin: auto;">
+                <div class="carousel-caption">
+                    <h3>Convert a queue into a playlist!</h3>
+                    <p>I hope you enjoy the songs the WebApp!</p>
+                </div>
+            </div>
+        </div>
+
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
 </div>
+<script>
+    var carousel = document.getElementById('carousel');
+
+    var carouselImgCollection = document.querySelectorAll(".carouselImg");
+
+    carouselImgCollection.forEach(findImgAndReplaceSource);
+
+    function findImgAndReplaceSource(image) {
+        var linkString = "https://picsum.photos/";
+        linkString += screen.width + "/";
+        linkString += screen.height + "?random=" + image.id;
+        image.src = linkString;
+    }
+
+</script>

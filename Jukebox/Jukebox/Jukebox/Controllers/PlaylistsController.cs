@@ -18,37 +18,58 @@ namespace Jukebox.Controllers
         // GET: Playlists
         public ActionResult Index()
         {
-            return View(db.Playlists.ToList());
+            if (Session["idUser"] != null)
+            {
+                return View(db.Playlists.ToList());
+            }
+            else
+            {
+                return Redirect("~/Home/Login");
+            }
         }
 
         // GET: Playlists/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["idUser"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            
-            MultipleModels multipleModels = new MultipleModels();
-            multipleModels.Songs = db.Songs;
-            multipleModels.Playlists = db.Playlists;
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
 
-            if (multipleModels == null)
-            {
-                return HttpNotFound();
+                MultipleModels multipleModels = new MultipleModels();
+                multipleModels.Songs = db.Songs;
+                multipleModels.Playlists = db.Playlists;
+
+                if (multipleModels == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(multipleModels);
             }
-            return View(multipleModels);
+            else 
+            {
+                return Redirect("~/Home/Login");
+            }
         }
 
         // GET: Playlists/Create
         public ActionResult Create(string convertingQueue)
         {
-            if (convertingQueue == "true") 
+            if (Session["idUser"] != null)
             {
-                Session["convertingQueue"] = convertingQueue;
-            }
+                if (convertingQueue == "true")
+                {
+                    Session["convertingQueue"] = convertingQueue;
+                }
 
-            return View();
+                return View();
+            }
+            else 
+            {
+                return Redirect("~/Home/Login");
+            }
         }
 
         // POST: Playlists/Create
