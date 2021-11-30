@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Jukebox.Song>
+@using Jukebox.Utilities;
 @{
     ViewBag.Title = "Home Page";
 }
@@ -56,15 +57,19 @@
         </a>
     </div>
 </div>
-@if (Session["tempPlaylist"] != null)
+@if (JukeboxHelper.Session.Queue.SongList != null)
 {
     <hr />
     <h1 class="text-center">Current Queue:</h1>
     <hr />
     <div class="row" style="display: flex; text-align: center; overflow-x:scroll;">
-        @{var songList = (List<Song>)Session["tempPlaylist"];
-            foreach (var song in songList)
+        @if(JukeboxHelper.Session.Queue.SongList != null){  
+            Song song;
+
+            var songList = (List<string>)JukeboxHelper.Session.Queue.SongList.Split(',').ToList();
+            foreach (var songString in songList)
             {
+                @(song = Model.Where(s => s.ID == int.Parse(songString)).First())
                 <div style="width: 25%;">
                     <div class="card-body">
                         <h4 class="card-title">@song.Name</h4>
@@ -80,7 +85,7 @@
             }
         }
     </div>
-}
+            }
 <hr />
 <div class="row slide-intro-left-3">
     <div class="col-md-4">

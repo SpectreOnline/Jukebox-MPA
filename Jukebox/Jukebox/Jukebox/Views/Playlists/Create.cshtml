@@ -1,30 +1,33 @@
 ﻿@model Jukebox.Playlists
-
+@using Jukebox.Utilities;
 @{
-    ViewBag.Title = "Create";
+ViewBag.Title = "Create";
 
-    string convertingQueue = "";
+string convertingQueue = "";
 
-    string songsInQueue = "";
+string songsInQueue = "";
 
 
-    if (Session["convertingQueue"] != null)
+    if (JukeboxHelper.Session.ConvertingQueue != null)
     {
-        convertingQueue = Session["convertingQueue"].ToString();
+        convertingQueue = JukeboxHelper.Session.ConvertingQueue.ToString();
 
-        foreach (var song in (List<Song>)Session["tempPlaylist"])
+        foreach (var songString in (List<string>)JukeboxHelper.Session.Queue.SongList.Split(',').ToList())
         {
+
             if (string.IsNullOrWhiteSpace(songsInQueue))
             {
-                songsInQueue = song.ID.ToString();
+                songsInQueue = songString;
             }
             else
             {
-                songsInQueue = songsInQueue + ',' + song.ID;
+                songsInQueue = songsInQueue + ',' + songString;
             }
         }
     }
 }
+
+
 
 <h2>Create</h2>
 
@@ -55,13 +58,13 @@
 
     @if (convertingQueue == "true")
     {
-    <div class="form-group hidden" hidden>
-        @Html.LabelFor(model => model.SongList, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input class="form-control text-box single-line" id="SongList" name="SongList" type="text" value="@songsInQueue">
-            @Html.ValidationMessageFor(model => model.SongList, "", new { @class = "text-danger" })
+        <div class="form-group hidden" hidden>
+            @Html.LabelFor(model => model.SongList, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" id="SongList" name="SongList" type="text" value="@songsInQueue">
+                @Html.ValidationMessageFor(model => model.SongList, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
     }
 
     <div class="form-group">
@@ -71,6 +74,7 @@
     </div>
 </div>
     }
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")

@@ -19,7 +19,7 @@ namespace Jukebox.Controllers
         // GET: Songs
         public ActionResult Index(string genre)
         {
-            if (Session["idUser"] != null)
+            if (JukeboxHelper.Session.UserId != null)
             {
                 MultipleModels multipleModels = new MultipleModels();
 
@@ -50,7 +50,7 @@ namespace Jukebox.Controllers
 
         public ActionResult Playlist()
         {
-            if (Session["idUser"] != null)
+            if (JukeboxHelper.Session.UserId != null)
             {
                 var playlists = db.Playlists;
                 return View(playlists.ToList());
@@ -64,7 +64,7 @@ namespace Jukebox.Controllers
             // GET: Songs/Details/5
             public ActionResult Details(int? id)
         {
-            if (Session["idUser"] != null)
+            if (JukeboxHelper.Session.UserId != null)
             {
                 if (id == null)
                 {
@@ -85,7 +85,7 @@ namespace Jukebox.Controllers
         // GET: Songs/Create
         public ActionResult Create()
         {
-            if (Session["idUser"] != null)
+            if (JukeboxHelper.Session.UserId != null)
             {
                 MultipleModels multipleModels = new MultipleModels();
                 multipleModels.Songs = db.Songs;
@@ -254,21 +254,40 @@ namespace Jukebox.Controllers
             }
         public ActionResult AddToQueue(int songID, string currentURL)
         {
-            Song song = db.Songs.Find(songID);
 
-            var songObjects = Session["tempPlaylist"] as List<Song> ?? new List<Song>();
-            songObjects.Add(song);
+            if (JukeboxHelper.Session.Queue.SongList == null)
+            {
+                JukeboxHelper.Session.Queue.SongList = songID.ToString();
 
-            Session["tempPlaylist"] = songObjects;
+                JukeboxHelper.Session.Song = db.Songs.Where(s => s.ID == songID).FirstOrDefault() ?? new Song();
 
-            string redirectURL = "~/" + currentURL;
+                string redirectURL = "~/" + currentURL;
 
-            return Redirect(redirectURL);
+                return Redirect(redirectURL);
+            }
+            else
+            {
+
+                List<string> songObjects;
+
+                songObjects = JukeboxHelper.Session.Queue.SongList.Split(',').ToList() ?? new List<string>();
+
+                songObjects.Add(songID.ToString());
+
+                JukeboxHelper.Session.Queue.SongList = string.Join(",", songObjects.ToArray());
+
+                string redirectURL = "~/" + currentURL;
+
+                return Redirect(redirectURL);
+            }
+
         }
 
         public ActionResult ClearQueue(string currentURL)
         {
-            Session["tempPlaylist"] = null;
+            JukeboxHelper.Session.Queue.SongList = null;
+
+            JukeboxHelper.Session.Song = null;
 
             string redirectURL = "~/" + currentURL;
 

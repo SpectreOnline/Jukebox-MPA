@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Jukebox.Models;
+using Jukebox.Utilities;
 
 namespace Jukebox.Controllers
 {
@@ -18,7 +19,7 @@ namespace Jukebox.Controllers
         // GET: Playlists
         public ActionResult Index()
         {
-            if (Session["idUser"] != null)
+            if (JukeboxHelper.Session.UserId != null)
             {
                 return View(db.Playlists.ToList());
             }
@@ -31,7 +32,7 @@ namespace Jukebox.Controllers
         // GET: Playlists/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["idUser"] != null)
+            if (JukeboxHelper.Session.UserId != null)
             {
                 if (id == null)
                 {
@@ -57,11 +58,11 @@ namespace Jukebox.Controllers
         // GET: Playlists/Create
         public ActionResult Create(string convertingQueue)
         {
-            if (Session["idUser"] != null)
+            if (JukeboxHelper.Session.UserId != null)
             {
                 if (convertingQueue == "true")
                 {
-                    Session["convertingQueue"] = convertingQueue;
+                    JukeboxHelper.Session.ConvertingQueue = convertingQueue;
                 }
 
                 return View();
@@ -112,7 +113,7 @@ namespace Jukebox.Controllers
         // GET: Playlists/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["idUser"] != null)
+            if (JukeboxHelper.Session.UserId != null)
             {
                 if (id == null)
                 {

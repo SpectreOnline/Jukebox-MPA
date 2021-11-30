@@ -1,13 +1,17 @@
-﻿@{ 
-    var nowPlaying = "";
-    if(Session["tempPlaylist"] != null)
-    {
-        List<Song> sessionObjects = (List<Song>)Session["tempPlaylist"];
+﻿@using Jukebox.Utilities;
 
-        nowPlaying = (sessionObjects).FirstOrDefault().Name;
+@{
+
+
+    var nowPlaying = "";
+
+    if (JukeboxHelper.Session.Queue.SongList != null)
+    {
+        nowPlaying = JukeboxHelper.Session.Song.Name;
     }
 
 }
+
 
 <!DOCTYPE html>
 <html>
@@ -31,7 +35,7 @@
                 </button>
                 @Html.ActionLink("Jukebox", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            @if (Session["idUser"] != null)
+            @if (JukeboxHelper.Session.UserId != null)
             {
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -51,7 +55,7 @@
         <footer>
         </footer>
         <div class="navbar navbar-inverse navbar-fixed-bottom slide-intro-bottom-1">
-            @if (Session["tempPlaylist"] != null)
+            @if (JukeboxHelper.Session.Queue.SongList != null)
             {
                 string currentURL = HttpContext.Current.Request.Url.AbsolutePath.TrimStart('/');
                 <p class="text-center" style="color:lightgray; margin-bottom: auto;">Now playing: @nowPlaying</p>

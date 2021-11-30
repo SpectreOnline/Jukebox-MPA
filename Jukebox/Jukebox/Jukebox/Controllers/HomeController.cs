@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Jukebox.Models;
 using System.Security.Cryptography;
+using Jukebox.Utilities;
 
 namespace Jukebox.Controllers
 {
@@ -14,7 +15,7 @@ namespace Jukebox.Controllers
         private Model1 db = new Model1();
         public ActionResult Index()
         {
-            if (Session["idUser"] != null)
+            if (JukeboxHelper.Session.UserId != null)
             {
                 var songs = db.Songs;
                 return View(songs.ToList());
@@ -80,9 +81,9 @@ namespace Jukebox.Controllers
                 if (userData.Count() > 0)
                 {
                     //add session
-                    Session["FullName"] = userData.FirstOrDefault().FirstName + " " + userData.FirstOrDefault().LastName;
-                    Session["Email"] = userData.FirstOrDefault().Email;
-                    Session["idUser"] = userData.FirstOrDefault().idUser;
+                    JukeboxHelper.Session.FullName = userData.FirstOrDefault().FirstName + " " + userData.FirstOrDefault().LastName;
+                    JukeboxHelper.Session.Email = userData.FirstOrDefault().Email;
+                    JukeboxHelper.Session.UserId = db.Users.Find(userData.FirstOrDefault().idUser);
                     return RedirectToAction("Index");
                 }
                 else

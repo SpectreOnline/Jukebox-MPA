@@ -7,6 +7,7 @@ namespace Jukebox.Utilities
 {
     public class JukeboxHelper 
     {
+        public static Session Session = new Session();
         public static List<int> SplitList(string songString)
         {
 
